@@ -1,0 +1,26 @@
+/* Hero.css */
+@keyframes wave {
+    0%, 100% {
+      transform: translateY(0); /* Default position */
+    }
+    20% {
+      transform: translateY(-10px); /* Slightly moves text up */
+    }
+    40% {
+      transform: translateY(5px); /* Slightly moves text down */
+    }
+    60% {
+      transform: translateY(-7px); /* Slightly moves text up */
+    }
+    80% {
+      transform: translateY(4px); /* Slightly moves text down */
+    }
+  }
+  
+  .wavy-text {
+    display: inline-block;
+    animation: wave 2s ease-in-out infinite; /* Infinite wavy effect */
+    font-family: 'Bungee', cursive; /* Garage-style font - you can use Google Fonts or a custom one */
+    letter-spacing: 0.05em; /* Slightly spaced letters for an industrial feel */
+  }
+  

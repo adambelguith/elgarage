@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion'; // Import Framer Motion for animation
+import { motion } from 'framer-motion'; 
 
 const Navbar = () => {
   const handleArrowClick = () => {
@@ -11,20 +11,18 @@ const Navbar = () => {
 
   return (
     <header className="relative w-full h-screen text-white">
-      {/* Background Animation */}
       <motion.div
         className="absolute inset-0 z-0 bg-hero-pattern bg-cover bg-center bg-no-repeat"
-        initial={{ y: '-100%' }}    // Start with the background off the top of the screen
-        animate={{ y: 0 }}          // Animate it to slide down into view
-        transition={{ duration: 2, ease: 'easeInOut' }}  // Control the speed and smoothness
+        initial={{ y: '-100%' }}    
+        animate={{ y: 0 }}        
+        transition={{ duration: 2, ease: 'easeInOut' }}  
       >
-        {/* Black overlay with opacity */}
+
         <div className="absolute inset-0 bg-black opacity-40"></div>
       </motion.div>
 
-      {/* Navbar */}
       <nav className="relative z-10 flex items-center justify-between p-6">
-        <div className="text-3xl font-bold">elGarage</div>
+        <div className="text-3xl font-bold">ELGARAGE AGENCY</div>
         <ul className="flex space-x-6">
           <li><a href="#about-section" className="hover:text-teal-400 transition">About</a></li>
           <li><a href="#services-section" className="hover:text-teal-400 transition">Services</a></li>
@@ -36,15 +34,15 @@ const Navbar = () => {
       <div className="relative z-10 flex flex-col items-center justify-center h-full text-center">
         <motion.h1
           className="text-6xl font-bold mb-4"
-          initial={{ y: 0 }}                    // Start at default position
-          animate={{ y: [0, -10, 0] }}          // Animate text bouncing up and down
+          initial={{ y: 0 }}                    
+          animate={{ y: [0, -10, 0] }}          
           transition={{ 
             duration: 1,                        // 1-second animation for each bounce
             ease: 'easeInOut', 
             repeat: 2                           // Repeat the animation 2 more times (total of 3 iterations)
           }}
         >
-          Welcome to The Garage
+          Welcome to ELGARAGE
         </motion.h1>
 
         <p className="text-lg text-gray-400 mb-6">Where innovation begins</p>

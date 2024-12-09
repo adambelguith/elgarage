@@ -1,24 +1,24 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useScrollAnimation } from '../hooks/useScrollAnimation'; // Import the custom hook
-import { FaLaptopCode, FaBrain, FaPalette, FaBullhorn } from 'react-icons/fa'; // Icons for sections
+import { useScrollAnimation } from '../hooks/useScrollAnimation'; 
+import { FaLaptopCode, FaBrain, FaPalette, FaBullhorn } from 'react-icons/fa';
 import garageImage from '../data/SilconValleyBinge.webp'; 
-import siliconvalleyfront from '../data/silicon-valley-front.jpg';
+
 
 const About = () => {
-  const { ref, controls } = useScrollAnimation(0.3); // Activate when 30% is in view
+  const { ref, controls } = useScrollAnimation(0.3); 
 
   return (
     <section
-      ref={ref} // Attach the Intersection Observer ref
+      ref={ref} 
       id="about-section"
       className="relative p-10 bg-gray-900 text-white overflow-hidden min-h-screen"
     >
-      {/* Flickering Light Effect */}
+
       <motion.div
         className="absolute inset-0 z-0 bg-gray-700 opacity-40"
         initial={{ opacity: 0.3 }}
-        animate={{ opacity: [0.3, 0.5, 0.4, 0.6, 0.3] }} // Flickering effect
+        animate={{ opacity: [0.3, 0.5, 0.4, 0.6, 0.3] }} 
         transition={{
           duration: 5,
           ease: 'easeInOut',
@@ -27,17 +27,15 @@ const About = () => {
         }}
       />
 
-      {/* About Us Section Content */}
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8">
-        
-        {/* Left Side: Image of the Team */}
+
         <motion.div
           className="relative"
           initial="hidden"
           animate={controls}
           variants={{
-            hidden: { opacity: 0, x: -50 }, // Slide in from the left
-            visible: { opacity: 1, x: 0 },  // Fade in and move to the normal position
+            hidden: { opacity: 0, x: -50 }, 
+            visible: { opacity: 1, x: 0 }, 
           }}
           transition={{ duration: 1.2 }}
         >
@@ -45,20 +43,19 @@ const About = () => {
             src={garageImage} 
             alt="Garage Workspace" 
             className="w-full h-auto rounded-3xl shadow-lg" 
-            style={{ filter: 'brightness(0.5)' }} // Darken the image with brightness
+            style={{ filter: 'brightness(0.5)' }} 
           />
-          <div className="absolute inset-0 bg-black opacity-40 rounded-3xl"></div> {/* Black overlay */}
+          <div className="absolute inset-0 bg-black opacity-40 rounded-3xl"></div>
         </motion.div>
 
-        {/* Right Side: Text Content */}
         <div className="flex flex-col justify-center">
           <motion.h2
             className="text-4xl font-bold mb-6"
             initial="hidden"
             animate={controls}
             variants={{
-              hidden: { opacity: 0, y: 20 }, // Start off-screen and transparent
-              visible: { opacity: 1, y: 0 }, // Fade in and move up
+              hidden: { opacity: 0, y: 20 }, 
+              visible: { opacity: 1, y: 0 }, 
             }}
             transition={{ duration: 1.2 }}
           >
@@ -70,8 +67,8 @@ const About = () => {
             initial="hidden"
             animate={controls}
             variants={{
-              hidden: { opacity: 0, x: -20 }, // Start to the left and transparent
-              visible: { opacity: 1, x: 0 }, // Slide in from the left and fade in
+              hidden: { opacity: 0, x: -20 }, 
+              visible: { opacity: 1, x: 0 }, 
             }}
             transition={{ duration: 1.2, delay: 0.2 }}
           >

@@ -57,135 +57,137 @@ const Services = () => {
   };
 
   return (
-    <Canvas shadows style={{ height: '100vh' }}>
-      <group rotation={[-Math.PI / 8, 0, 0]}>
-        <ambientLight intensity={0.5} />
-        <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} castShadow />
+    <div className="relative" style={{ zIndex: 1 }}>
+      <Canvas shadows style={{ height: '100vh' }}>
+        <group rotation={[-Math.PI / 8, 0, 0]}>
+          <ambientLight intensity={0.5} />
+          <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} castShadow />
 
-        <group>
-          <Text
-            position={[0, 3, 0]}
-            fontSize={1}
-            color="white"
-            maxWidth={10}
-            castShadow
-            textAlign="center"
-          >
-            ELgarage Agency
-          </Text>
-          <Text
-            position={[0, 3, -0.2]}
-            fontSize={1}
-            color="black"
-            maxWidth={10}
-            castShadow
-            textAlign="center"
-            strokeWidth={0.6}
-            strokeColor="black"
-          >
-            ELgarage Agency
-          </Text>
+          <group>
+            <Text
+              position={[0, 3, 0]}
+              fontSize={1}
+              color="white"
+              maxWidth={10}
+              castShadow
+              textAlign="center"
+            >
+              ELgarage Agency
+            </Text>
+            <Text
+              position={[0, 3, -0.2]}
+              fontSize={1}
+              color="black"
+              maxWidth={10}
+              castShadow
+              textAlign="center"
+              strokeWidth={0.6}
+              strokeColor="black"
+            >
+              ELgarage Agency
+            </Text>
+          </group>
+
+          {services.map((service, index) => {
+            const xPosition = (index - (services.length - 1) / 2) * 2.7;
+
+            return (
+              <React.Fragment key={index}>
+                <group>
+
+                  <Html position={[xPosition - 0.2, -0.1, 0]} style={{ pointerEvents: 'none' }} className="services-icon">
+                    <div style={{ fontSize: '1.8em', color: 'lightblue' }}>
+                      {service.icon}
+                    </div>
+                  </Html>
+
+                  <Text
+                    position={[xPosition, -0.7, 0]}
+                    fontSize={0.3}
+                    color="lightblue"
+                    maxWidth={3}
+                    castShadow
+                    textAlign="center"
+                    rotation={[rotation, 0, 0]}
+                  >
+                    {service.name}
+                  </Text>
+
+                  <Text
+                    position={[xPosition, -0.8, -0.1]}
+                    fontSize={0.3}
+                    color="black"
+                    maxWidth={3}
+                    castShadow
+                    textAlign="center"
+                    strokeWidth={0.5}
+                    strokeColor="black"
+                    rotation={[rotation, 0, 0]}
+                  >
+                    {service.name}
+                  </Text>
+
+                  <Line
+                    points={[[0, 2.3, 0], [xPosition, 0, 0]]}
+                    color="lightblue"
+                    lineWidth={1}
+                  />
+
+                  {service.subServices &&
+                    service.subServices.map((subService, subIndex) => {
+                      const yPosition = -1.5 - subIndex * 0.5;
+
+                      return (
+                        <React.Fragment key={subIndex}>
+                          <Html position={[xPosition - 0.9, yPosition + 0.1, 0]} style={{ pointerEvents: 'none' }} className="services-icon">
+                            <div style={{ fontSize: '1.2em', color: 'white' }}>
+                              {subService.icon}
+                            </div>
+                          </Html>
+
+                          <Text
+                            position={[xPosition, yPosition, 0]}
+                            fontSize={0.2}
+                            color="white"
+                            maxWidth={3}
+                            castShadow
+                            textAlign="center"
+                          >
+                            {subService.name}
+                          </Text>
+
+                          <Text
+                            position={[xPosition, yPosition, -0.1]}
+                            fontSize={0.2}
+                            color="black"
+                            maxWidth={3}
+                            castShadow
+                            textAlign="center"
+                            strokeWidth={0.3}
+                            strokeColor="black"
+                          >
+                            {subService.name}
+                          </Text>
+
+                          <Line
+                            points={[
+                              [xPosition, -0.8, 0],
+                              [xPosition, yPosition + 0.1, 0]
+                            ]}
+                            color="white"
+                            lineWidth={0.3}
+                          />
+                        </React.Fragment>
+                      );
+                    })}
+                </group>
+              </React.Fragment>
+            );
+          })}
         </group>
-
-        {services.map((service, index) => {
-          const xPosition = (index - (services.length - 1) / 2) * 2.7;
-
-          return (
-            <React.Fragment key={index}>
-              <group>
-
-                <Html position={[xPosition - 0.2, -0.1, 0]}>
-                  <div style={{ fontSize: '1.8em', color: 'lightblue' }}>
-                    {service.icon}
-                  </div>
-                </Html>
-
-                <Text
-                  position={[xPosition, -0.7, 0]}
-                  fontSize={0.3}
-                  color="lightblue"
-                  maxWidth={3}
-                  castShadow
-                  textAlign="center"
-                  rotation={[rotation, 0, 0]}
-                >
-                  {service.name}
-                </Text>
-
-                <Text
-                  position={[xPosition, -0.8, -0.1]}
-                  fontSize={0.3}
-                  color="black"
-                  maxWidth={3}
-                  castShadow
-                  textAlign="center"
-                  strokeWidth={0.5}
-                  strokeColor="black"
-                  rotation={[rotation, 0, 0]}
-                >
-                  {service.name}
-                </Text>
-
-                <Line
-                  points={[[0, 2.3, 0], [xPosition, 0, 0]]}
-                  color="lightblue"
-                  lineWidth={1}
-                />
-
-                {service.subServices &&
-                  service.subServices.map((subService, subIndex) => {
-                    const yPosition = -1.5 - subIndex * 0.5;
-
-                    return (
-                      <React.Fragment key={subIndex}>
-                        <Html position={[xPosition - 0.9, yPosition + 0.1, 0]}>
-                          <div style={{ fontSize: '1.2em', color: 'white' }}>
-                            {subService.icon}
-                          </div>
-                        </Html>
-
-                        <Text
-                          position={[xPosition, yPosition, 0]}
-                          fontSize={0.2}
-                          color="white"
-                          maxWidth={3}
-                          castShadow
-                          textAlign="center"
-                        >
-                          {subService.name}
-                        </Text>
-
-                        <Text
-                          position={[xPosition, yPosition, -0.1]}
-                          fontSize={0.2}
-                          color="black"
-                          maxWidth={3}
-                          castShadow
-                          textAlign="center"
-                          strokeWidth={0.3}
-                          strokeColor="black"
-                        >
-                          {subService.name}
-                        </Text>
-
-                        <Line
-                          points={[
-                            [xPosition, -0.8, 0],
-                            [xPosition, yPosition + 0.1, 0]
-                          ]}
-                          color="white"
-                          lineWidth={0.3}
-                        />
-                      </React.Fragment>
-                    );
-                  })}
-              </group>
-            </React.Fragment>
-          );
-        })}
-      </group>
-      <OrbitControls enableZoom={false} />
-    </Canvas>
+        <OrbitControls enableZoom={false} />
+      </Canvas>
+    </div>
   );
 };
 

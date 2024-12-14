@@ -1,17 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaPaperPlane, FaTimes, FaRocket } from 'react-icons/fa';
+import { FaTimes, FaUser, FaEnvelope, FaBuilding, FaIndustry, FaBullseye } from 'react-icons/fa';
+
+const InputField = ({ icon: Icon, ...props }) => (
+  <div className="relative">
+    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+      <Icon className="text-blue-400" size={16} />
+    </div>
+    <input
+      {...props}
+      className="w-full pl-10 pr-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white text-sm"
+    />
+  </div>
+);
+
+const SelectField = ({ icon: Icon, ...props }) => (
+  <div className="relative">
+    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+      <Icon className="text-blue-400" size={16} />
+    </div>
+    <select
+      {...props}
+      className="w-full pl-10 pr-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white text-sm appearance-none"
+    />
+  </div>
+);
 
 const SurveyModal = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     company: '',
-    budget: '',
+    industry: '',
     marketingGoals: '',
-    timeline: '',
-    services: [],
+    services: []
   });
+
+  useEffect(() => {
+    if (isOpen) {
+      // Add class to body when modal is open
+      document.body.style.overflow = 'hidden';
+      document.querySelector('.services-icon')?.style.setProperty('z-index', '1');
+    } else {
+      // Remove class when modal is closed
+      document.body.style.overflow = 'unset';
+      document.querySelector('.services-icon')?.style.setProperty('z-index', '10');
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+      document.querySelector('.services-icon')?.style.setProperty('z-index', '10');
+    };
+  }, [isOpen]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,182 +81,159 @@ const SurveyModal = ({ isOpen, onClose }) => {
     'Content Creation',
     'Web Development',
     'SEO Optimization',
-    'Brand Strategy',
+    'Brand Strategy'
+  ];
+
+  const industries = [
+    'Technology',
+    'E-commerce',
+    'Healthcare',
+    'Education',
+    'Real Estate',
+    'Finance',
+    'Manufacturing',
+    'Retail',
+    'Services',
+    'Other'
   ];
 
   return (
     <AnimatePresence>
       {isOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-[9999] p-4 overflow-y-auto"
-          onClick={onClose}
-        >
+        <>
           <motion.div
-            initial={{ scale: 0.9, opacity: 0, y: 20 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.9, opacity: 0, y: 20 }}
-            transition={{ type: "spring", damping: 25 }}
-            className="bg-gradient-to-br from-gray-900 via-gray-900 to-gray-800 rounded-2xl p-8 max-w-2xl w-full shadow-2xl border border-gray-700/50 relative"
-            onClick={(e) => e.stopPropagation()}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/90 backdrop-blur-xl"
+            style={{
+              zIndex: 999999,
+              backdropFilter: 'blur(16px)',
+            }}
+            onClick={onClose}
+          />
+          
+          <motion.div
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.95, opacity: 0 }}
+            transition={{ type: "spring", damping: 30 }}
+            className="fixed inset-0 flex items-center justify-center pointer-events-none"
+            style={{ zIndex: 1000000 }}
           >
-            {/* Close Button */}
-            <button
-              onClick={onClose}
-              className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors p-2 hover:bg-gray-800 rounded-full"
-            >
-              <FaTimes size={24} />
-            </button>
+            <div className="relative w-full max-w-lg mx-4 pointer-events-auto">
+              <div className="bg-gray-900 rounded-xl shadow-2xl border border-gray-800">
+                {/* Header */}
+                <div className="flex justify-between items-center p-4 border-b border-gray-800">
+                  <h2 className="text-xl font-bold text-white">Marketing Strategy Survey</h2>
+                  <button
+                    onClick={onClose}
+                    className="text-gray-400 hover:text-white transition-colors"
+                  >
+                    <FaTimes size={20} />
+                  </button>
+                </div>
 
-            {/* Header */}
-            <div className="text-center mb-8">
-              <motion.div
-                initial={{ y: -20 }}
-                animate={{ y: 0 }}
-                className="inline-block p-3 bg-blue-500/10 rounded-full mb-4"
-              >
-                <FaRocket size={32} className="text-blue-400" />
-              </motion.div>
-              <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-400 via-blue-300 to-teal-400 bg-clip-text text-transparent">
-                Marketing Strategy Survey
-              </h2>
-              <p className="text-gray-400 mt-2">
-                Help us understand your needs better
-              </p>
-            </div>
-
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Personal Info Section */}
-              <div className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-1">Name</label>
-                    <input
+                {/* Form */}
+                <form onSubmit={handleSubmit} className="p-4 space-y-4">
+                  {/* Contact Info Row */}
+                  <div className="grid grid-cols-2 gap-4">
+                    <InputField
+                      icon={FaUser}
                       type="text"
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-gray-500 transition-all"
-                      placeholder="John Doe"
+                      placeholder="Your Name"
                       required
                     />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-1">Email</label>
-                    <input
+                    <InputField
+                      icon={FaEnvelope}
                       type="email"
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-gray-500 transition-all"
-                      placeholder="john@example.com"
+                      placeholder="Email Address"
                       required
                     />
                   </div>
-                </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-1">Company</label>
-                  <input
-                    type="text"
-                    name="company"
-                    value={formData.company}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-gray-500 transition-all"
-                    placeholder="Your Company Name"
-                  />
-                </div>
-              </div>
-
-              {/* Services Section */}
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-3">
-                  Services You're Interested In
-                </label>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  {services.map((service) => (
-                    <label
-                      key={service}
-                      className="flex items-center space-x-3 p-3 bg-gray-800/30 rounded-lg cursor-pointer hover:bg-gray-800/50 transition-colors"
+                  {/* Company & Industry Row */}
+                  <div className="grid grid-cols-2 gap-4">
+                    <InputField
+                      icon={FaBuilding}
+                      type="text"
+                      name="company"
+                      value={formData.company}
+                      onChange={handleChange}
+                      placeholder="Company Name"
+                      required
+                    />
+                    <SelectField
+                      icon={FaIndustry}
+                      name="industry"
+                      value={formData.industry}
+                      onChange={handleChange}
+                      required
                     >
-                      <input
-                        type="checkbox"
-                        name="services"
-                        value={service}
-                        checked={formData.services.includes(service)}
-                        onChange={handleChange}
-                        className="w-4 h-4 text-blue-500 border-gray-700 rounded focus:ring-blue-500 focus:ring-offset-gray-900"
-                      />
-                      <span className="text-gray-300">{service}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
+                      <option value="">Select Industry</option>
+                      {industries.map(industry => (
+                        <option key={industry} value={industry.toLowerCase()}>
+                          {industry}
+                        </option>
+                      ))}
+                    </SelectField>
+                  </div>
 
-              {/* Budget and Timeline */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-1">Budget Range</label>
-                  <select
-                    name="budget"
-                    value={formData.budget}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
-                    required
+                  {/* Services */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-gray-300">Services Interested In</label>
+                    <div className="grid grid-cols-2 gap-2">
+                      {services.map((service) => (
+                        <label
+                          key={service}
+                          className="flex items-center space-x-2 text-sm text-gray-300 hover:text-white cursor-pointer"
+                        >
+                          <input
+                            type="checkbox"
+                            name="services"
+                            value={service}
+                            checked={formData.services.includes(service)}
+                            onChange={handleChange}
+                            className="rounded border-gray-700 text-blue-500 focus:ring-blue-500 bg-gray-800"
+                          />
+                          <span>{service}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Marketing Goals */}
+                  <div className="relative">
+                    <div className="absolute top-2 left-3">
+                      <FaBullseye className="text-blue-400" size={16} />
+                    </div>
+                    <textarea
+                      name="marketingGoals"
+                      value={formData.marketingGoals}
+                      onChange={handleChange}
+                      placeholder="Tell us about your marketing goals and current challenges..."
+                      className="w-full pl-10 pr-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white text-sm h-20 resize-none"
+                      required
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors"
                   >
-                    <option value="">Select a range</option>
-                    <option value="0-5000">$0 - $5,000</option>
-                    <option value="5000-10000">$5,000 - $10,000</option>
-                    <option value="10000-25000">$10,000 - $25,000</option>
-                    <option value="25000+">$25,000+</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-1">Timeline</label>
-                  <select
-                    name="timeline"
-                    value={formData.timeline}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
-                    required
-                  >
-                    <option value="">Select timeline</option>
-                    <option value="immediate">Immediate</option>
-                    <option value="1-3months">1-3 months</option>
-                    <option value="3-6months">3-6 months</option>
-                    <option value="6months+">6+ months</option>
-                  </select>
-                </div>
+                    Submit Survey
+                  </button>
+                </form>
               </div>
-
-              {/* Marketing Goals */}
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">Marketing Goals</label>
-                <textarea
-                  name="marketingGoals"
-                  value={formData.marketingGoals}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-gray-500 transition-all"
-                  rows="4"
-                  placeholder="Tell us about your marketing goals and objectives..."
-                  required
-                ></textarea>
-              </div>
-
-              {/* Submit Button */}
-              <button
-                type="submit"
-                className="w-full mt-6 px-6 py-4 bg-gradient-to-r from-blue-500 to-teal-500 text-white rounded-lg font-medium hover:from-blue-600 hover:to-teal-600 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center justify-center space-x-2 transform hover:scale-[1.02] transition-all duration-200 shadow-lg shadow-blue-500/25"
-              >
-                <span className="text-lg">Submit Survey</span>
-                <FaPaperPlane className="text-lg" />
-              </button>
-            </form>
+            </div>
           </motion.div>
-        </motion.div>
+        </>
       )}
     </AnimatePresence>
   );
